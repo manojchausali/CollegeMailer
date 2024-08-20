@@ -1,0 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package swingapp;
+
+/**
+ *
+ * @author Manoj
+ */
+import java.sql.*;
+public class database
+{
+Connection con;
+PreparedStatement pst;
+ResultSet rs;
+database()
+{
+try{
+
+
+Class.forName("com.mysql.jdbc.Driver");
+con=DriverManager.getConnection("jdbc:mysql://localhost:3307/collegemail","root","manoj123");
+pst=con.prepareStatement("select * from Authority1 where Authority1_id=? and Authority1_pass=?");
+}
+catch (Exception e)
+{
+System.out.println(e);
+}
+}
+
+public Boolean checkLogin(String Authority1_id, String Authority1_pass)
+{
+try {
+pst.setString(1, Authority1_id); //this replaces the 1st  "?" in the query for username
+pst.setString(2, Authority1_pass);    //this replaces the 2st  "?" in the query for password
+//executes the prepared statement
+rs=pst.executeQuery();
+if(rs.next())
+{
+//TRUE iff the query founds any corresponding data
+return true;
+}
+else
+{
+return false;
+}
+} catch (Exception e) {
+// TODO Auto-generated catch block
+System.out.println("error while validating"+e);
+return false;
+}
+}
+}
+
