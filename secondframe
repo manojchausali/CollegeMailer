@@ -1,0 +1,205 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package swingapp;
+
+/**
+ *
+ * @author Manoj
+ */
+import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
+import org.jdatepicker.impl.*;
+import org.jdatepicker.util.*;
+import org.jdatepicker.graphics.*;
+
+import org.jdatepicker.*;
+
+
+import net.atlanticbb.tantlinger.shef.HTMLEditorPane;
+public class SecondFrame extends JFrame{
+    private JDatePickerImpl datePicker;
+    
+    private JLabel h = new JLabel("Email Content");
+    private JLabel n= new JLabel("Department:");
+    private JLabel f= new JLabel("Faculty:");
+    private JLabel s= new JLabel("Student:");
+    private JLabel d= new JLabel("Date To Send:");
+    private JButton b= new JButton("Submit");
+    private JTextArea t = new JTextArea(5,50);
+   
+    private JScrollPane sp = new JScrollPane(t);
+    private HTMLEditorPane Editor= new HTMLEditorPane();
+    
+   
+    
+        
+        
+        public SecondFrame() {
+            super("Welcome To Your Dashboard");
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                UtilDateModel model = new UtilDateModel();
+                model.setDate(1990, 8, 24);
+                Properties p= new Properties();
+                p.put("text.today","Today");
+                p.put("text.month", "Month");
+                p.put("tex.year", "Year");
+                JDatePanelImpl datePanel= new JDatePanelImpl(model,p);
+                JDatePickerImpl datePicker= new JDatePickerImpl(datePanel,new DateLabelFormatter());
+                
+		 
+		model.setSelected(true);
+                
+               t.setLineWrap(true);
+               t.setWrapStyleWord(true);
+                sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                
+                JRadioButton Option1= new JRadioButton("Yes");
+                 JRadioButton Option2= new JRadioButton("No");
+                 JRadioButton Option3= new JRadioButton("Yes");
+                 JRadioButton Option4= new JRadioButton("No");
+                 ButtonGroup g = new ButtonGroup();
+                 g.add(Option1);
+                 g.add(Option2);
+                ButtonGroup g1= new ButtonGroup();
+                g1.add(Option3);
+                g1.add(Option4);
+                String[] dropdown1 = new String[] { "Menu","Log Out" };
+                final JComboBox<String> content = new JComboBox<String>(dropdown1);
+                // add an event listener for the combo box
+		content.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JComboBox<String> combo = (JComboBox<String>) event.getSource();
+				String cont = (String) combo.getSelectedItem();
+
+				DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) combo
+						.getModel();
+
+				int selectedIndex = model.getIndexOf(cont);
+				if (selectedIndex < 0) {
+					// if the selected book does not exist before, 
+					// add it into this combo box
+					model.addElement(cont);
+				}
+                        }
+			
+                    
+		});
+             
+        
+                String[] dropdown2 = new String[] { "Department","Electrical","Mechanical","Civil" };
+                final JComboBox<String> content1 = new JComboBox<String>(dropdown2);
+                // add an event listener for the combo box
+		content1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JComboBox<String> combo = (JComboBox<String>) event.getSource();
+				String depart = (String) combo.getSelectedItem();
+
+				DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) combo
+						.getModel();
+
+				int selectedIndex = model.getIndexOf(depart);
+				if (selectedIndex < 0) {
+					// if the selected book does not exist before, 
+					// add it into this combo box
+					model.addElement(depart);
+				}
+
+			}
+		});
+               
+               
+		
+		JPanel P = new JPanel(new GridBagLayout());
+                GridBagConstraints con = new GridBagConstraints();
+                con.insets = new Insets(5, 5, 5, 5);
+                
+                con.gridx=0;
+                con.gridy=0;
+                
+                P.add(content,con);
+                
+                con.gridx=0;
+                con.gridy=1;
+                P.add(h,con);
+                con.gridy=2;
+                P.add(Editor,con);
+                
+                t.setBorder(BorderFactory.createLineBorder(Color.GRAY,1));
+                con.gridy=3;
+                P.add(content1,con);
+                con.gridy=4;
+                P.add(f,con);
+                con.gridx=1;
+                con.gridy=4;
+                P.add(Option1,con);
+                con.gridx=2;
+                con.gridy=4;
+                P.add(Option2,con);
+                con.gridx=0;
+                con.gridy=5;
+                P.add(s,con);
+                con.gridx=1;
+                con.gridy=5;
+                P.add(Option3,con);
+                con.gridx=2;
+                con.gridy=5;
+                P.add(Option4,con);
+                con.gridx=0;
+                con.gridy=6;
+                P.add(d,con);
+                con.gridx=1;
+                con.gridy=6;
+                P.add(datePicker,con);
+                con.gridx=0;
+                con.gridy=7;
+                P.add(b,con);
+               
+                
+                add(P);
+                
+               pack();
+		setLocationRelativeTo(null);
+              
+                setVisible(true);
+        }
+        
+            
+        
+public static void main(String[] args) {
+		
+	SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				new SecondFrame().setVisible(true);
+			}
+		}
+        );
+}
+}
+
+
